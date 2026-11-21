@@ -1,0 +1,2050 @@
+{
+  "suite": "wimse-http-signature-test-vectors",
+  "set_version": "v4",
+  "draft_version": "draft-ietf-wimse-http-signature-08",
+  "source": {
+    "file": "source.md",
+    "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+    "archive_doi": "10.5281/zenodo.24203971",
+    "previous_version_doi": "10.5281/zenodo.24184599",
+    "license": "CC-BY-4.0"
+  },
+  "counts": {
+    "positive": 6,
+    "negative": 23,
+    "negative_message": 17,
+    "negative_behavior": 6,
+    "observation": 3,
+    "judged_total": 29
+  },
+  "stage_codes": [
+    "CONTEXT",
+    "PARSE",
+    "WIT",
+    "SELECT",
+    "PARAMS",
+    "COVERAGE",
+    "BASE",
+    "DIGEST",
+    "CRYPTO",
+    "AUD",
+    "BINDING",
+    "WINDOW"
+  ],
+  "materials": {
+    "keys": [
+      {
+        "name": "issuer",
+        "alg": "Ed25519",
+        "kid": "issuer-key",
+        "sub": null,
+        "public_jwk": {
+          "alg": "Ed25519",
+          "crv": "Ed25519",
+          "kid": "issuer-key",
+          "kty": "OKP",
+          "x": "QH_Zu0pnwyO8xdFQm9upOUFAbpb4nhMrGc29L3uJXDA"
+        },
+        "private_d": "4nRAPQQyr8cUgAtCESLc4ZIGIxZT9-guqxcc3wV-2NI",
+        "derivation": "d = base64url(SHA-256(\"s01-validation-vectors:issuer\"))"
+      },
+      {
+        "name": "svcA",
+        "alg": "Ed25519",
+        "kid": "vec-a-key",
+        "sub": "wimse://example.com/svcA",
+        "public_jwk": {
+          "alg": "Ed25519",
+          "crv": "Ed25519",
+          "kid": "vec-a-key",
+          "kty": "OKP",
+          "x": "O3OfVmPJ3peYhdDrMweNIiBOQU6JZCNcYMK2kjV0i3Y"
+        },
+        "private_d": "F8BhX5poMswcVwTgEMGETOhdN72PaxIiwuGYWrzSUvk",
+        "derivation": "d = base64url(SHA-256(\"s01-validation-vectors:svcA\"))"
+      },
+      {
+        "name": "svcB",
+        "alg": "Ed25519",
+        "kid": "vec-b-key",
+        "sub": "wimse://example.com/svcB",
+        "public_jwk": {
+          "alg": "Ed25519",
+          "crv": "Ed25519",
+          "kid": "vec-b-key",
+          "kty": "OKP",
+          "x": "4jVAzgEPO5n-6jujSiyQME5t-tIzZApbhR5cTPoedII"
+        },
+        "private_d": "4MaIKp1h5mkTS7ZSawz6QYN6FYA_rOYBPDfGEZCpPDg",
+        "derivation": "d = base64url(SHA-256(\"s01-validation-vectors:svcB\"))"
+      },
+      {
+        "name": "svcC",
+        "alg": "ES256",
+        "kid": "vec-c-key",
+        "sub": "wimse://example.com/svcC",
+        "public_jwk": {
+          "alg": "ES256",
+          "crv": "P-256",
+          "kid": "vec-c-key",
+          "kty": "EC",
+          "x": "jZjfUBQgD1l9R_lm4nzo1rP82pGVDBxHD6YmOo_xoCo",
+          "y": "CBGv9b8hB-l0mov9rlu223g-vNE_SquCC2IhPi2IweE"
+        },
+        "private_d": "X94ti7AkOiC4JcxdbSmLkwWEzyEU4wMqBX_9LHfXQaU",
+        "derivation": "scalar = SHA-256(\"s01-validation-vectors:svcC\") mod (n-1) + 1"
+      },
+      {
+        "name": "other",
+        "alg": "Ed25519",
+        "kid": "other-key",
+        "sub": null,
+        "public_jwk": {
+          "alg": "Ed25519",
+          "crv": "Ed25519",
+          "kid": "other-key",
+          "kty": "OKP",
+          "x": "Lo6grJBjN252d2huS1-ckJIql2FZR2vrTOF2qKRBTm4"
+        },
+        "private_d": "KL4_B1CdV7qwZkVYvyK0I5SrsEzv6yb1p1PNAfbC7LY",
+        "derivation": "d = base64url(SHA-256(\"s01-validation-vectors:other\"))"
+      }
+    ],
+    "wits": {
+      "WIT-A": {
+        "jws": "eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWEta2V5Iiwia3R5IjoiT0tQIiwieCI6Ik8zT2ZWbVBKM3BlWWhkRHJNd2VOSWlCT1FVNkpaQ05jWU1LMmtqVjBpM1kifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1hLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0EifQ.JCh9sN__1Al9xVB-K7CFafw1tDV8PCeZvyKdFyMmb9vvN4mK2ZGNbC6VLFpNzpVsgGBV0FwmzerDAFuikSJBCw",
+        "protected_header": {
+          "alg": "Ed25519",
+          "kid": "issuer-key",
+          "typ": "wit+jwt"
+        },
+        "claims": {
+          "cnf": {
+            "jwk": {
+              "alg": "Ed25519",
+              "crv": "Ed25519",
+              "kid": "vec-a-key",
+              "kty": "OKP",
+              "x": "O3OfVmPJ3peYhdDrMweNIiBOQU6JZCNcYMK2kjV0i3Y"
+            }
+          },
+          "exp": 1795003600,
+          "iat": 1794999940,
+          "iss": "https://example.com/issuer",
+          "jti": "wit-a-1795000000",
+          "sub": "wimse://example.com/svcA"
+        }
+      },
+      "WIT-B": {
+        "jws": "eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWIta2V5Iiwia3R5IjoiT0tQIiwieCI6IjRqVkF6Z0VQTzVuLTZqdWpTaXlRTUU1dC10SXpaQXBiaFI1Y1RQb2VkSUkifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1iLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0IifQ.iBAAT-2xF6Polfa49cDu4THgh3zhCdbAitBM5JIgxuuCEdbjMKglKVskt7E78jdE42i3FMMP9-Lw0PLRXwXaBQ",
+        "protected_header": {
+          "alg": "Ed25519",
+          "kid": "issuer-key",
+          "typ": "wit+jwt"
+        },
+        "claims": {
+          "cnf": {
+            "jwk": {
+              "alg": "Ed25519",
+              "crv": "Ed25519",
+              "kid": "vec-b-key",
+              "kty": "OKP",
+              "x": "4jVAzgEPO5n-6jujSiyQME5t-tIzZApbhR5cTPoedII"
+            }
+          },
+          "exp": 1795003600,
+          "iat": 1794999940,
+          "iss": "https://example.com/issuer",
+          "jti": "wit-b-1795000000",
+          "sub": "wimse://example.com/svcB"
+        }
+      },
+      "WIT-C": {
+        "jws": "eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVTMjU2IiwiY3J2IjoiUC0yNTYiLCJraWQiOiJ2ZWMtYy1rZXkiLCJrdHkiOiJFQyIsIngiOiJqWmpmVUJRZ0QxbDlSX2xtNG56bzFyUDgycEdWREJ4SEQ2WW1Pb194b0NvIiwieSI6IkNCR3Y5YjhoQi1sMG1vdjlybHUyMjNnLXZORV9TcXVDQzJJaFBpMkl3ZUUifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1jLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0MifQ.8-bmHNavOVSxyr2hAtnKfrC-kdm5L4XMP4n1cGGMLh5DjSPmdjTWkpKtTO9tPZfKMIfLVC7xGaDvoJXUdizGCg",
+        "protected_header": {
+          "alg": "Ed25519",
+          "kid": "issuer-key",
+          "typ": "wit+jwt"
+        },
+        "claims": {
+          "cnf": {
+            "jwk": {
+              "alg": "ES256",
+              "crv": "P-256",
+              "kid": "vec-c-key",
+              "kty": "EC",
+              "x": "jZjfUBQgD1l9R_lm4nzo1rP82pGVDBxHD6YmOo_xoCo",
+              "y": "CBGv9b8hB-l0mov9rlu223g-vNE_SquCC2IhPi2IweE"
+            }
+          },
+          "exp": 1795003600,
+          "iat": 1794999940,
+          "iss": "https://example.com/issuer",
+          "jti": "wit-c-1795000000",
+          "sub": "wimse://example.com/svcC"
+        }
+      }
+    },
+    "trusted_config": {
+      "wimse_aud_trusted": [
+        "https://svcb.example.com/gimme-ice-cream",
+        "https://svcb.example.com/inventory/cones",
+        "https://svcb.example.com/status",
+        "https://svcb.example.com"
+      ],
+      "issuer_anchor_jwk": {
+        "alg": "Ed25519",
+        "crv": "Ed25519",
+        "kid": "issuer-key",
+        "kty": "OKP",
+        "x": "QH_Zu0pnwyO8xdFQm9upOUFAbpb4nhMrGc29L3uJXDA"
+      }
+    },
+    "key_derivation": {
+      "ed25519_seed": "SHA-256(\"s01-validation-vectors:<name>\")",
+      "jwk_d": "base64url(seed)",
+      "svcC_ec_scalar": "SHA-256(\"s01-validation-vectors:svcC\") mod (n-1) + 1"
+    },
+    "clock": {
+      "t0": 1795000000,
+      "default_verify_offset": 60,
+      "expires_offset": 300
+    },
+    "conventions": {
+      "problem_type_uri": "https://iana.org/assignments/http-problem-types#wimse-signature-invalid",
+      "message_line_ending": "CRLF",
+      "signature_base_line_ending": "LF, no trailing newline",
+      "placeholder_expansion": "[WIT-x，§2 全文] -> materials.wits[WIT-x].jws"
+    }
+  },
+  "vectors": [
+    {
+      "id": "P-01",
+      "kind": "positive",
+      "mode": "oracle",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "3",
+        "entry": "P-01",
+        "lines": [
+          107,
+          129
+        ],
+        "anchor_line": 128
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "The request is signed",
+          "quote_tail": "components MUST be signed",
+          "quote_source": "a11-supplement"
+        },
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "In addition, the following",
+          "quote_tail": "MUST be signed when they exist",
+          "quote_source": "a11-supplement"
+        },
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "For both requests and responses",
+          "quote_tail": "MUST be included",
+          "quote_source": "a11-supplement"
+        },
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "For requests only, the following",
+          "quote_tail": "MUST also be included",
+          "quote_source": "a11-supplement"
+        },
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "Recipients MUST reject signatures",
+          "quote_tail": "their validity time window",
+          "quote_source": "a11-supplement"
+        },
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "Recipients of signed HTTP messages",
+          "quote_tail": "the HTTP message signature",
+          "quote_source": "a11-supplement"
+        },
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3.3",
+          "quote_head": "When present with the value true",
+          "quote_tail": "if it cannot (Section 3.6)",
+          "quote_source": "a11-supplement"
+        },
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3.3",
+          "quote_head": "If the client is configured",
+          "quote_tail": "the request's Signature-Input",
+          "quote_source": "a11-supplement"
+        }
+      ],
+      "base_ref": null,
+      "paired_request_ref": null,
+      "materials_ref": [
+        "WIT-A",
+        "key:svcA",
+        "key:issuer",
+        "config:default"
+      ],
+      "message": {
+        "role": "request",
+        "raw": "GET /gimme-ice-cream?flavor=vanilla HTTP/1.1\r\nHost: svcb.example.com\r\nWorkload-Identity-Token: eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWEta2V5Iiwia3R5IjoiT0tQIiwieCI6Ik8zT2ZWbVBKM3BlWWhkRHJNd2VOSWlCT1FVNkpaQ05jWU1LMmtqVjBpM1kifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1hLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0EifQ.JCh9sN__1Al9xVB-K7CFafw1tDV8PCeZvyKdFyMmb9vvN4mK2ZGNbC6VLFpNzpVsgGBV0FwmzerDAFuikSJBCw\r\nSignature-Input: sig1=(\"@method\" \"@path\" \"@query\" \"workload-identity-token\");created=1795000000;expires=1795000300;nonce=\"7f3a9c1e5b284d06a1f4e8c2b6d50937\";tag=\"wimse-workload-to-workload\";wimse-aud=\"https://svcb.example.com/gimme-ice-cream\";wimse-sign-response\r\nSignature: sig1=:qrIGE6wS80/UvhJx96iDiz90OIYmUX8CFO4vOeK/40D7pnukeikqvsYGDs6aqXx099ILxgZliEepCw1P5M7YDg==:\r\n\r\n",
+        "body": null
+      },
+      "signatures": [
+        {
+          "label": "sig1",
+          "value": "qrIGE6wS80/UvhJx96iDiz90OIYmUX8CFO4vOeK/40D7pnukeikqvsYGDs6aqXx099ILxgZliEepCw1P5M7YDg=="
+        }
+      ],
+      "signature_base_provided": {
+        "sig1": "\"@method\": GET\n\"@path\": /gimme-ice-cream\n\"@query\": ?flavor=vanilla\n\"workload-identity-token\": eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWEta2V5Iiwia3R5IjoiT0tQIiwieCI6Ik8zT2ZWbVBKM3BlWWhkRHJNd2VOSWlCT1FVNkpaQ05jWU1LMmtqVjBpM1kifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1hLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0EifQ.JCh9sN__1Al9xVB-K7CFafw1tDV8PCeZvyKdFyMmb9vvN4mK2ZGNbC6VLFpNzpVsgGBV0FwmzerDAFuikSJBCw\n\"@signature-params\": (\"@method\" \"@path\" \"@query\" \"workload-identity-token\");created=1795000000;expires=1795000300;nonce=\"7f3a9c1e5b284d06a1f4e8c2b6d50937\";tag=\"wimse-workload-to-workload\";wimse-aud=\"https://svcb.example.com/gimme-ice-cream\";wimse-sign-response"
+      },
+      "mutation": null,
+      "signature_source": "literal",
+      "evaluations": [
+        {
+          "verify_time": 1795000060,
+          "expect": {
+            "outcome": "ACCEPT"
+          }
+        }
+      ],
+      "expect_stages": "all-pass"
+    },
+    {
+      "id": "P-02",
+      "kind": "positive",
+      "mode": "oracle",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "3",
+        "entry": "P-02",
+        "lines": [
+          130,
+          159
+        ],
+        "anchor_line": 158
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "If the response is signed",
+          "quote_tail": "components MUST be signed",
+          "quote_source": "a11-supplement"
+        },
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "To protect the integrity",
+          "quote_tail": "as defined in [RFC9530]",
+          "quote_source": "a11-supplement"
+        },
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3.4",
+          "quote_head": "Every signed response MUST include",
+          "quote_tail": "that triggered the response",
+          "quote_source": "a11-supplement"
+        },
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3.5",
+          "quote_head": "If the server is required",
+          "quote_tail": "as described in Section 3.6",
+          "quote_source": "a11-supplement"
+        },
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3.5",
+          "quote_head": "The client MUST reject",
+          "quote_tail": "with the Boolean value true",
+          "quote_source": "a11-supplement"
+        },
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3.5",
+          "quote_head": "When validating a signed response",
+          "quote_tail": "from the corresponding request",
+          "quote_source": "a11-supplement"
+        },
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3.5",
+          "quote_head": "Whenever a signed response",
+          "quote_tail": "reject it if validation fails",
+          "quote_source": "a11-supplement"
+        }
+      ],
+      "base_ref": null,
+      "paired_request_ref": "P-01",
+      "materials_ref": [
+        "WIT-B",
+        "key:svcB",
+        "key:issuer",
+        "config:default"
+      ],
+      "message": {
+        "role": "response",
+        "raw": "HTTP/1.1 404 Not Found\r\nContent-Type: text/plain\r\nContent-Digest: sha-256=:uJC3qmCc7n6/6w4N2I0vAfj1cd/hTOAhxLEYXmPbNno=:\r\nWorkload-Identity-Token: eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWIta2V5Iiwia3R5IjoiT0tQIiwieCI6IjRqVkF6Z0VQTzVuLTZqdWpTaXlRTUU1dC10SXpaQXBiaFI1Y1RQb2VkSUkifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1iLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0IifQ.iBAAT-2xF6Polfa49cDu4THgh3zhCdbAitBM5JIgxuuCEdbjMKglKVskt7E78jdE42i3FMMP9-Lw0PLRXwXaBQ\r\nSignature-Input: sig1=(\"@status\" \"workload-identity-token\" \"content-type\" \"content-digest\" \"@method\";req \"@path\";req \"@query\";req);created=1795000002;expires=1795000302;nonce=\"2b8e4f0a9d1c3756e0a2b4c6d8f0a1b3\";tag=\"wimse-workload-to-workload\";wimse-req-nonce=\"7f3a9c1e5b284d06a1f4e8c2b6d50937\"\r\nSignature: sig1=:XugjjXCtpc0lkt5QSnjVF/OcQwqhQAqAzuykBUw36FsGV6BmXcMKfY0YZTMTnvpsjIZkmOeTN+PvQEzAb/veDQ==:\r\n\r\nNo ice cream today.\n",
+        "body": "No ice cream today.\n"
+      },
+      "signatures": [
+        {
+          "label": "sig1",
+          "value": "XugjjXCtpc0lkt5QSnjVF/OcQwqhQAqAzuykBUw36FsGV6BmXcMKfY0YZTMTnvpsjIZkmOeTN+PvQEzAb/veDQ=="
+        }
+      ],
+      "signature_base_provided": {
+        "sig1": "\"@status\": 404\n\"workload-identity-token\": eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWIta2V5Iiwia3R5IjoiT0tQIiwieCI6IjRqVkF6Z0VQTzVuLTZqdWpTaXlRTUU1dC10SXpaQXBiaFI1Y1RQb2VkSUkifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1iLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0IifQ.iBAAT-2xF6Polfa49cDu4THgh3zhCdbAitBM5JIgxuuCEdbjMKglKVskt7E78jdE42i3FMMP9-Lw0PLRXwXaBQ\n\"content-type\": text/plain\n\"content-digest\": sha-256=:uJC3qmCc7n6/6w4N2I0vAfj1cd/hTOAhxLEYXmPbNno=:\n\"@method\";req: GET\n\"@path\";req: /gimme-ice-cream\n\"@query\";req: ?flavor=vanilla\n\"@signature-params\": (\"@status\" \"workload-identity-token\" \"content-type\" \"content-digest\" \"@method\";req \"@path\";req \"@query\";req);created=1795000002;expires=1795000302;nonce=\"2b8e4f0a9d1c3756e0a2b4c6d8f0a1b3\";tag=\"wimse-workload-to-workload\";wimse-req-nonce=\"7f3a9c1e5b284d06a1f4e8c2b6d50937\""
+      },
+      "mutation": null,
+      "signature_source": "literal",
+      "evaluations": [
+        {
+          "verify_time": 1795000060,
+          "expect": {
+            "outcome": "ACCEPT"
+          }
+        }
+      ],
+      "expect_stages": "all-pass"
+    },
+    {
+      "id": "P-03",
+      "kind": "positive",
+      "mode": "oracle",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "3",
+        "entry": "P-03",
+        "lines": [
+          160,
+          187
+        ],
+        "anchor_line": 186
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3.1",
+          "quote_head": "The HTTP message signature algorithm",
+          "quote_tail": "object in the WIT",
+          "quote_source": "a11-supplement"
+        },
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3.1",
+          "quote_head": "Recipients MUST verify the HTTP",
+          "quote_tail": "for the peer's trust domain",
+          "quote_source": "a11-supplement"
+        },
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "To protect the integrity",
+          "quote_tail": "as defined in [RFC9530]",
+          "quote_source": "a11-supplement"
+        },
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "In addition, the following",
+          "quote_tail": "MUST be signed when they exist",
+          "quote_source": "a11-supplement"
+        }
+      ],
+      "base_ref": null,
+      "paired_request_ref": null,
+      "materials_ref": [
+        "WIT-C",
+        "key:svcC",
+        "key:issuer",
+        "config:default"
+      ],
+      "message": {
+        "role": "request",
+        "raw": "POST /inventory/cones HTTP/1.1\r\nHost: svcb.example.com\r\nContent-Type: application/json\r\nContent-Digest: sha-256=:TzKXT0tUEfiTFkjRzwE8nCFnQljMuX5xwJaJgJCp+1g=:\r\nWorkload-Identity-Token: eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVTMjU2IiwiY3J2IjoiUC0yNTYiLCJraWQiOiJ2ZWMtYy1rZXkiLCJrdHkiOiJFQyIsIngiOiJqWmpmVUJRZ0QxbDlSX2xtNG56bzFyUDgycEdWREJ4SEQ2WW1Pb194b0NvIiwieSI6IkNCR3Y5YjhoQi1sMG1vdjlybHUyMjNnLXZORV9TcXVDQzJJaFBpMkl3ZUUifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1jLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0MifQ.8-bmHNavOVSxyr2hAtnKfrC-kdm5L4XMP4n1cGGMLh5DjSPmdjTWkpKtTO9tPZfKMIfLVC7xGaDvoJXUdizGCg\r\nSignature-Input: sig1=(\"@method\" \"@path\" \"@query\" \"workload-identity-token\" \"content-type\" \"content-digest\");created=1795000000;expires=1795000300;nonce=\"c51d7a2e8f093b46a5c1d2e3f4a5b6c7\";tag=\"wimse-workload-to-workload\";wimse-aud=\"https://svcb.example.com/inventory/cones\"\r\nSignature: sig1=:n7QUfcBz5ruH3anRYFpW7drn1CInZfV4TZPxlqBIlHg1g78FnRhk7CQudkHN8kNGAHfsBTgIvfHGJMZ8f2QTbQ==:\r\n\r\n{\"flavor\":\"vanilla\",\"amount\":1}",
+        "body": "{\"flavor\":\"vanilla\",\"amount\":1}"
+      },
+      "signatures": [
+        {
+          "label": "sig1",
+          "value": "n7QUfcBz5ruH3anRYFpW7drn1CInZfV4TZPxlqBIlHg1g78FnRhk7CQudkHN8kNGAHfsBTgIvfHGJMZ8f2QTbQ=="
+        }
+      ],
+      "signature_base_provided": {
+        "sig1": "\"@method\": POST\n\"@path\": /inventory/cones\n\"@query\": ?\n\"workload-identity-token\": eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVTMjU2IiwiY3J2IjoiUC0yNTYiLCJraWQiOiJ2ZWMtYy1rZXkiLCJrdHkiOiJFQyIsIngiOiJqWmpmVUJRZ0QxbDlSX2xtNG56bzFyUDgycEdWREJ4SEQ2WW1Pb194b0NvIiwieSI6IkNCR3Y5YjhoQi1sMG1vdjlybHUyMjNnLXZORV9TcXVDQzJJaFBpMkl3ZUUifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1jLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0MifQ.8-bmHNavOVSxyr2hAtnKfrC-kdm5L4XMP4n1cGGMLh5DjSPmdjTWkpKtTO9tPZfKMIfLVC7xGaDvoJXUdizGCg\n\"content-type\": application/json\n\"content-digest\": sha-256=:TzKXT0tUEfiTFkjRzwE8nCFnQljMuX5xwJaJgJCp+1g=:\n\"@signature-params\": (\"@method\" \"@path\" \"@query\" \"workload-identity-token\" \"content-type\" \"content-digest\");created=1795000000;expires=1795000300;nonce=\"c51d7a2e8f093b46a5c1d2e3f4a5b6c7\";tag=\"wimse-workload-to-workload\";wimse-aud=\"https://svcb.example.com/inventory/cones\""
+      },
+      "mutation": null,
+      "signature_source": "literal",
+      "evaluations": [
+        {
+          "verify_time": 1795000060,
+          "expect": {
+            "outcome": "ACCEPT"
+          }
+        }
+      ],
+      "expect_stages": "all-pass"
+    },
+    {
+      "id": "P-04",
+      "kind": "positive",
+      "mode": "oracle",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "3",
+        "entry": "P-04",
+        "lines": [
+          188,
+          209
+        ],
+        "anchor_line": 208
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3 (CONNECT exception)",
+          "quote_head": null,
+          "quote_tail": null,
+          "quote_source": "none-in-entry"
+        },
+        {
+          "doc": "RFC 9421",
+          "section": "2.2.3",
+          "quote_head": "the default port",
+          "quote_tail": "port is omitted",
+          "quote_source": "entry-anchor",
+          "quote_loc": "§0 K1 row"
+        }
+      ],
+      "base_ref": null,
+      "paired_request_ref": null,
+      "materials_ref": [
+        "WIT-A",
+        "key:svcA",
+        "key:issuer",
+        "config:default"
+      ],
+      "message": {
+        "role": "request",
+        "raw": "CONNECT svcb.example.com:443 HTTP/1.1\r\nHost: svcb.example.com:443\r\nWorkload-Identity-Token: eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWEta2V5Iiwia3R5IjoiT0tQIiwieCI6Ik8zT2ZWbVBKM3BlWWhkRHJNd2VOSWlCT1FVNkpaQ05jWU1LMmtqVjBpM1kifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1hLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0EifQ.JCh9sN__1Al9xVB-K7CFafw1tDV8PCeZvyKdFyMmb9vvN4mK2ZGNbC6VLFpNzpVsgGBV0FwmzerDAFuikSJBCw\r\nSignature-Input: sig1=(\"@method\" \"@authority\" \"workload-identity-token\");created=1795000000;expires=1795000300;nonce=\"9a0b1c2d3e4f5061728394a5b6c7d8e9\";tag=\"wimse-workload-to-workload\";wimse-aud=\"https://svcb.example.com\"\r\nSignature: sig1=:oQvU3xBjXSOTm2zDvjGMWa/lsOGPyB8+AYxoA9aNd1Dgx2ulyMynph+/lR6d6Vkdl1rXR62kHuaG0sG4q3m2AQ==:\r\n\r\n",
+        "body": null
+      },
+      "signatures": [
+        {
+          "label": "sig1",
+          "value": "oQvU3xBjXSOTm2zDvjGMWa/lsOGPyB8+AYxoA9aNd1Dgx2ulyMynph+/lR6d6Vkdl1rXR62kHuaG0sG4q3m2AQ=="
+        }
+      ],
+      "signature_base_provided": {
+        "sig1": "\"@method\": CONNECT\n\"@authority\": svcb.example.com\n\"workload-identity-token\": eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWEta2V5Iiwia3R5IjoiT0tQIiwieCI6Ik8zT2ZWbVBKM3BlWWhkRHJNd2VOSWlCT1FVNkpaQ05jWU1LMmtqVjBpM1kifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1hLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0EifQ.JCh9sN__1Al9xVB-K7CFafw1tDV8PCeZvyKdFyMmb9vvN4mK2ZGNbC6VLFpNzpVsgGBV0FwmzerDAFuikSJBCw\n\"@signature-params\": (\"@method\" \"@authority\" \"workload-identity-token\");created=1795000000;expires=1795000300;nonce=\"9a0b1c2d3e4f5061728394a5b6c7d8e9\";tag=\"wimse-workload-to-workload\";wimse-aud=\"https://svcb.example.com\""
+      },
+      "mutation": null,
+      "signature_source": "literal",
+      "evaluations": [
+        {
+          "verify_time": 1795000060,
+          "expect": {
+            "outcome": "ACCEPT"
+          }
+        }
+      ],
+      "expect_stages": "all-pass"
+    },
+    {
+      "id": "P-05",
+      "kind": "positive",
+      "mode": "oracle",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "3",
+        "entry": "P-05",
+        "lines": [
+          210,
+          232
+        ],
+        "anchor_line": 231
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "@query is included even",
+          "quote_tail": "its value is ?",
+          "quote_source": "entry-anchor"
+        }
+      ],
+      "base_ref": null,
+      "paired_request_ref": null,
+      "materials_ref": [
+        "WIT-A",
+        "key:svcA",
+        "key:issuer",
+        "config:default"
+      ],
+      "message": {
+        "role": "request",
+        "raw": "GET /status HTTP/1.1\r\nHost: svcb.example.com\r\nWorkload-Identity-Token: eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWEta2V5Iiwia3R5IjoiT0tQIiwieCI6Ik8zT2ZWbVBKM3BlWWhkRHJNd2VOSWlCT1FVNkpaQ05jWU1LMmtqVjBpM1kifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1hLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0EifQ.JCh9sN__1Al9xVB-K7CFafw1tDV8PCeZvyKdFyMmb9vvN4mK2ZGNbC6VLFpNzpVsgGBV0FwmzerDAFuikSJBCw\r\nSignature-Input: sig1=(\"@method\" \"@path\" \"@query\" \"workload-identity-token\");created=1795000000;expires=1795000300;nonce=\"13579bdf2468ace013579bdf2468ace0\";tag=\"wimse-workload-to-workload\";wimse-aud=\"https://svcb.example.com/status\"\r\nSignature: sig1=:62NICDRikwhl4IlI2ls8cGIACVyuFNtmSZdYOZKiO88AqsKZLQuybOkQx5SQYkREcB0OiU4xT+qn9/hoAj1LAg==:\r\n\r\n",
+        "body": null
+      },
+      "signatures": [
+        {
+          "label": "sig1",
+          "value": "62NICDRikwhl4IlI2ls8cGIACVyuFNtmSZdYOZKiO88AqsKZLQuybOkQx5SQYkREcB0OiU4xT+qn9/hoAj1LAg=="
+        }
+      ],
+      "signature_base_provided": {
+        "sig1": "\"@method\": GET\n\"@path\": /status\n\"@query\": ?\n\"workload-identity-token\": eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWEta2V5Iiwia3R5IjoiT0tQIiwieCI6Ik8zT2ZWbVBKM3BlWWhkRHJNd2VOSWlCT1FVNkpaQ05jWU1LMmtqVjBpM1kifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1hLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0EifQ.JCh9sN__1Al9xVB-K7CFafw1tDV8PCeZvyKdFyMmb9vvN4mK2ZGNbC6VLFpNzpVsgGBV0FwmzerDAFuikSJBCw\n\"@signature-params\": (\"@method\" \"@path\" \"@query\" \"workload-identity-token\");created=1795000000;expires=1795000300;nonce=\"13579bdf2468ace013579bdf2468ace0\";tag=\"wimse-workload-to-workload\";wimse-aud=\"https://svcb.example.com/status\""
+      },
+      "mutation": null,
+      "signature_source": "literal",
+      "evaluations": [
+        {
+          "verify_time": 1795000060,
+          "expect": {
+            "outcome": "ACCEPT"
+          }
+        }
+      ],
+      "expect_stages": "all-pass"
+    },
+    {
+      "id": "P-06",
+      "kind": "positive",
+      "mode": "oracle",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "3",
+        "entry": "P-06",
+        "lines": [
+          233,
+          261
+        ],
+        "anchor_line": 260
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "recipients MUST use that",
+          "quote_tail": "NOT choose by label",
+          "quote_source": "entry-anchor"
+        }
+      ],
+      "base_ref": null,
+      "paired_request_ref": null,
+      "materials_ref": [
+        "WIT-A",
+        "key:svcA",
+        "key:other",
+        "key:issuer",
+        "config:default"
+      ],
+      "message": {
+        "role": "request",
+        "raw": "GET /gimme-ice-cream?flavor=vanilla HTTP/1.1\r\nHost: svcb.example.com\r\nWorkload-Identity-Token: eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWEta2V5Iiwia3R5IjoiT0tQIiwieCI6Ik8zT2ZWbVBKM3BlWWhkRHJNd2VOSWlCT1FVNkpaQ05jWU1LMmtqVjBpM1kifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1hLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0EifQ.JCh9sN__1Al9xVB-K7CFafw1tDV8PCeZvyKdFyMmb9vvN4mK2ZGNbC6VLFpNzpVsgGBV0FwmzerDAFuikSJBCw\r\nSignature-Input: sig1=(\"@method\" \"@path\");created=1795000000;keyid=\"other-key\";tag=\"example-other\", sig2=(\"@method\" \"@path\" \"@query\" \"workload-identity-token\");created=1795000000;expires=1795000300;nonce=\"f0e1d2c3b4a5968778695a4b3c2d1e0f\";tag=\"wimse-workload-to-workload\";wimse-aud=\"https://svcb.example.com/gimme-ice-cream\"\r\nSignature: sig1=:C9vDZlqwPqD3dPtkwhQDz0cmpsy0Z2tSE/ewIHjMCdgmdNN7nqrZTLLZqGobMOjswZF43HMaJXGGjFVuRYB5BQ==:, sig2=:Dyr5ErLhw5LmeYIztg6QZmfARn96ucIGuMXUgsyGj9MMc4Y9cQmQ6345/c8/n584kmlk1TfL7xmNVDQKkG7EAw==:\r\n\r\n",
+        "body": null
+      },
+      "signatures": [
+        {
+          "label": "sig1",
+          "value": "C9vDZlqwPqD3dPtkwhQDz0cmpsy0Z2tSE/ewIHjMCdgmdNN7nqrZTLLZqGobMOjswZF43HMaJXGGjFVuRYB5BQ=="
+        },
+        {
+          "label": "sig2",
+          "value": "Dyr5ErLhw5LmeYIztg6QZmfARn96ucIGuMXUgsyGj9MMc4Y9cQmQ6345/c8/n584kmlk1TfL7xmNVDQKkG7EAw=="
+        }
+      ],
+      "signature_base_provided": {
+        "sig2": "\"@method\": GET\n\"@path\": /gimme-ice-cream\n\"@query\": ?flavor=vanilla\n\"workload-identity-token\": eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWEta2V5Iiwia3R5IjoiT0tQIiwieCI6Ik8zT2ZWbVBKM3BlWWhkRHJNd2VOSWlCT1FVNkpaQ05jWU1LMmtqVjBpM1kifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1hLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0EifQ.JCh9sN__1Al9xVB-K7CFafw1tDV8PCeZvyKdFyMmb9vvN4mK2ZGNbC6VLFpNzpVsgGBV0FwmzerDAFuikSJBCw\n\"@signature-params\": (\"@method\" \"@path\" \"@query\" \"workload-identity-token\");created=1795000000;expires=1795000300;nonce=\"f0e1d2c3b4a5968778695a4b3c2d1e0f\";tag=\"wimse-workload-to-workload\";wimse-aud=\"https://svcb.example.com/gimme-ice-cream\"",
+        "sig1": "\"@method\": GET\n\"@path\": /gimme-ice-cream\n\"@signature-params\": (\"@method\" \"@path\");created=1795000000;keyid=\"other-key\";tag=\"example-other\""
+      },
+      "mutation": null,
+      "signature_source": "literal",
+      "evaluations": [
+        {
+          "verify_time": 1795000060,
+          "expect": {
+            "outcome": "ACCEPT"
+          }
+        }
+      ],
+      "expect_stages": "all-pass"
+    },
+    {
+      "id": "N-01",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "4",
+        "entry": "N-01",
+        "lines": [
+          266,
+          267
+        ],
+        "anchor_line": 267
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "The following derived components",
+          "quote_tail": "@method, @path, @query",
+          "quote_source": "entry-anchor"
+        }
+      ],
+      "base_ref": "P-01",
+      "paired_request_ref": null,
+      "materials_ref": [
+        "WIT-A",
+        "key:svcA",
+        "key:issuer",
+        "config:default"
+      ],
+      "mutation": {
+        "op": "remove-component",
+        "component": "@query"
+      },
+      "signature_source": "literal",
+      "message": null,
+      "signatures": [],
+      "signature_base_provided": null,
+      "evaluations": [
+        {
+          "verify_time": 1795000060,
+          "expect": {
+            "outcome": "REJECT",
+            "http_status": 400,
+            "problem_type": "wimse-signature-invalid",
+            "failing_stage": "COVERAGE",
+            "failing_code": "E_COVERAGE_MISSING",
+            "cascades": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "N-02",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "4",
+        "entry": "N-02",
+        "lines": [
+          268,
+          269
+        ],
+        "anchor_line": 269
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "For a CONNECT request,",
+          "quote_tail": "cover @path or @query",
+          "quote_source": "entry-anchor"
+        }
+      ],
+      "base_ref": "P-04",
+      "paired_request_ref": null,
+      "materials_ref": [
+        "WIT-A",
+        "key:svcA",
+        "key:issuer",
+        "config:default"
+      ],
+      "mutation": {
+        "op": "add-component",
+        "component": "@path"
+      },
+      "signature_source": "regen",
+      "message": null,
+      "signatures": [],
+      "signature_base_provided": null,
+      "evaluations": [
+        {
+          "verify_time": 1795000060,
+          "expect": {
+            "outcome": "REJECT",
+            "http_status": 400,
+            "problem_type": "wimse-signature-invalid",
+            "failing_stage": "COVERAGE",
+            "failing_code": "E_COVERAGE_FORBIDDEN",
+            "cascades": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "N-03",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "4",
+        "entry": "N-03",
+        "lines": [
+          270,
+          271
+        ],
+        "anchor_line": 271
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "if the request or",
+          "quote_tail": "verify) a Content-Digest header",
+          "quote_source": "entry-anchor"
+        }
+      ],
+      "base_ref": "P-03",
+      "paired_request_ref": null,
+      "materials_ref": [
+        "WIT-C",
+        "key:svcC",
+        "key:issuer",
+        "config:default"
+      ],
+      "mutation": {
+        "op": "remove-component",
+        "component": "content-digest",
+        "note": "remove both the Content-Digest header and its coverage item"
+      },
+      "signature_source": "literal",
+      "message": null,
+      "signatures": [],
+      "signature_base_provided": null,
+      "evaluations": [
+        {
+          "verify_time": 1795000060,
+          "expect": {
+            "outcome": "REJECT",
+            "http_status": 400,
+            "problem_type": "wimse-signature-invalid",
+            "failing_stage": "COVERAGE",
+            "failing_code": "E_DIGEST_MISSING",
+            "cascades": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "N-04",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "4",
+        "entry": "N-04",
+        "lines": [
+          272,
+          273
+        ],
+        "anchor_line": 273
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "the receiver MUST compute",
+          "quote_tail": "Content-Digest value provided",
+          "quote_source": "entry-anchor"
+        }
+      ],
+      "base_ref": "P-03",
+      "paired_request_ref": null,
+      "materials_ref": [
+        "WIT-C",
+        "key:svcC",
+        "key:issuer",
+        "config:default"
+      ],
+      "mutation": {
+        "op": "set-body",
+        "body": "{\"flavor\":\"chocolate\",\"amount\":1}"
+      },
+      "signature_source": "literal",
+      "message": null,
+      "signatures": [],
+      "signature_base_provided": null,
+      "evaluations": [
+        {
+          "verify_time": 1795000060,
+          "expect": {
+            "outcome": "REJECT",
+            "http_status": 400,
+            "problem_type": "wimse-signature-invalid",
+            "failing_stage": "DIGEST",
+            "failing_code": "E_DIGEST_MISMATCH",
+            "cascades": [
+              "CRYPTO"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "N-05",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "4",
+        "entry": "N-05",
+        "lines": [
+          274,
+          275
+        ],
+        "anchor_line": 275
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "the following signature parameters",
+          "quote_tail": "created, expires, nonce, tag",
+          "quote_source": "entry-anchor"
+        }
+      ],
+      "base_ref": "P-01",
+      "paired_request_ref": null,
+      "materials_ref": [
+        "WIT-A",
+        "key:svcA",
+        "key:issuer",
+        "config:default"
+      ],
+      "mutation": {
+        "op": "remove-param",
+        "param": "expires"
+      },
+      "signature_source": "literal",
+      "message": null,
+      "signatures": [],
+      "signature_base_provided": null,
+      "evaluations": [
+        {
+          "verify_time": 1795000060,
+          "expect": {
+            "outcome": "REJECT",
+            "http_status": 400,
+            "problem_type": "wimse-signature-invalid",
+            "failing_stage": "PARAMS",
+            "failing_code": "E_PARAM_MISSING",
+            "cascades": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "N-06",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "4",
+        "entry": "N-06",
+        "lines": [
+          276,
+          277
+        ],
+        "anchor_line": 277
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "The following signature parameters",
+          "quote_tail": "NOT be used: keyid",
+          "quote_source": "entry-anchor"
+        }
+      ],
+      "base_ref": "P-01",
+      "paired_request_ref": null,
+      "materials_ref": [
+        "WIT-A",
+        "key:svcA",
+        "key:issuer",
+        "config:default"
+      ],
+      "mutation": {
+        "op": "add-param",
+        "param": "keyid=\"vec-a-key\""
+      },
+      "signature_source": "regen",
+      "message": null,
+      "signatures": [],
+      "signature_base_provided": null,
+      "evaluations": [
+        {
+          "verify_time": 1795000060,
+          "expect": {
+            "outcome": "REJECT",
+            "http_status": 400,
+            "problem_type": "wimse-signature-invalid",
+            "failing_stage": "PARAMS",
+            "failing_code": "E_PARAM_FORBIDDEN",
+            "cascades": []
+          }
+        }
+      ],
+      "notes": "Author confirmation (S4): reject reading confirmed by draft co-author on the WIMSE list, 2026-11-07."
+    },
+    {
+      "id": "N-07",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "4",
+        "entry": "N-07",
+        "lines": [
+          278,
+          279
+        ],
+        "anchor_line": 279
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3, 3.1",
+          "quote_head": "The alg signature parameter",
+          "quote_tail": "MUST NOT be used",
+          "quote_source": "entry-anchor"
+        }
+      ],
+      "base_ref": "P-01",
+      "paired_request_ref": null,
+      "materials_ref": [
+        "WIT-A",
+        "key:svcA",
+        "key:issuer",
+        "config:default"
+      ],
+      "mutation": {
+        "op": "add-param",
+        "param": "alg=\"ed25519\""
+      },
+      "signature_source": "regen",
+      "message": null,
+      "signatures": [],
+      "signature_base_provided": null,
+      "evaluations": [
+        {
+          "verify_time": 1795000060,
+          "expect": {
+            "outcome": "REJECT",
+            "http_status": 400,
+            "problem_type": "wimse-signature-invalid",
+            "failing_stage": "PARAMS",
+            "failing_code": "E_PARAM_FORBIDDEN",
+            "cascades": []
+          }
+        }
+      ],
+      "notes": "Author confirmation (S4): same as N-06."
+    },
+    {
+      "id": "N-08",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "4",
+        "entry": "N-08",
+        "lines": [
+          280,
+          281
+        ],
+        "anchor_line": 281
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "If more than one",
+          "quote_tail": "MUST reject the message",
+          "quote_source": "entry-anchor"
+        }
+      ],
+      "base_ref": "P-06",
+      "paired_request_ref": null,
+      "materials_ref": [
+        "WIT-A",
+        "key:svcA",
+        "key:other",
+        "key:issuer",
+        "config:default"
+      ],
+      "mutation": {
+        "op": "set-param",
+        "member": "sig1",
+        "param": "tag=\"wimse-workload-to-workload\""
+      },
+      "signature_source": "regen",
+      "message": null,
+      "signatures": [],
+      "signature_base_provided": null,
+      "evaluations": [
+        {
+          "verify_time": 1795000060,
+          "expect": {
+            "outcome": "REJECT",
+            "http_status": 400,
+            "problem_type": "wimse-signature-invalid",
+            "failing_stage": "SELECT",
+            "failing_code": "E_TAG_AMBIGUOUS",
+            "cascades": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "N-09",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "4",
+        "entry": "N-09",
+        "lines": [
+          282,
+          283
+        ],
+        "anchor_line": 283
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "Recipients MUST reject signatures",
+          "quote_tail": "validity time window",
+          "quote_source": "entry-anchor"
+        }
+      ],
+      "base_ref": "P-01",
+      "paired_request_ref": null,
+      "materials_ref": [
+        "WIT-A",
+        "key:svcA",
+        "key:issuer",
+        "config:default"
+      ],
+      "mutation": {
+        "op": "set-verify-time",
+        "verify_time": 1795003600
+      },
+      "signature_source": "literal",
+      "message": {
+        "role": "request",
+        "raw": "GET /gimme-ice-cream?flavor=vanilla HTTP/1.1\r\nHost: svcb.example.com\r\nWorkload-Identity-Token: eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWEta2V5Iiwia3R5IjoiT0tQIiwieCI6Ik8zT2ZWbVBKM3BlWWhkRHJNd2VOSWlCT1FVNkpaQ05jWU1LMmtqVjBpM1kifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1hLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0EifQ.JCh9sN__1Al9xVB-K7CFafw1tDV8PCeZvyKdFyMmb9vvN4mK2ZGNbC6VLFpNzpVsgGBV0FwmzerDAFuikSJBCw\r\nSignature-Input: sig1=(\"@method\" \"@path\" \"@query\" \"workload-identity-token\");created=1795000000;expires=1795000300;nonce=\"7f3a9c1e5b284d06a1f4e8c2b6d50937\";tag=\"wimse-workload-to-workload\";wimse-aud=\"https://svcb.example.com/gimme-ice-cream\";wimse-sign-response\r\nSignature: sig1=:qrIGE6wS80/UvhJx96iDiz90OIYmUX8CFO4vOeK/40D7pnukeikqvsYGDs6aqXx099ILxgZliEepCw1P5M7YDg==:\r\n\r\n",
+        "body": null
+      },
+      "signatures": [
+        {
+          "label": "sig1",
+          "value": "qrIGE6wS80/UvhJx96iDiz90OIYmUX8CFO4vOeK/40D7pnukeikqvsYGDs6aqXx099ILxgZliEepCw1P5M7YDg=="
+        }
+      ],
+      "signature_base_provided": {
+        "sig1": "\"@method\": GET\n\"@path\": /gimme-ice-cream\n\"@query\": ?flavor=vanilla\n\"workload-identity-token\": eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWEta2V5Iiwia3R5IjoiT0tQIiwieCI6Ik8zT2ZWbVBKM3BlWWhkRHJNd2VOSWlCT1FVNkpaQ05jWU1LMmtqVjBpM1kifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1hLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0EifQ.JCh9sN__1Al9xVB-K7CFafw1tDV8PCeZvyKdFyMmb9vvN4mK2ZGNbC6VLFpNzpVsgGBV0FwmzerDAFuikSJBCw\n\"@signature-params\": (\"@method\" \"@path\" \"@query\" \"workload-identity-token\");created=1795000000;expires=1795000300;nonce=\"7f3a9c1e5b284d06a1f4e8c2b6d50937\";tag=\"wimse-workload-to-workload\";wimse-aud=\"https://svcb.example.com/gimme-ice-cream\";wimse-sign-response"
+      },
+      "evaluations": [
+        {
+          "verify_time": 1795003600,
+          "expect": {
+            "outcome": "REJECT",
+            "http_status": 400,
+            "problem_type": "wimse-signature-invalid",
+            "failing_stage": "WINDOW",
+            "failing_code": "E_WINDOW_OUTSIDE",
+            "cascades": []
+          }
+        }
+      ],
+      "notes": "At T0+3600 WIT-A is also expired (exp=T0+3600); attribution isolation is weak, see N-09b."
+    },
+    {
+      "id": "N-09b",
+      "kind": "negative-message",
+      "mode": "contrast",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "4",
+        "entry": "N-09b",
+        "lines": [
+          284,
+          285
+        ],
+        "anchor_line": 285
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "Recipients MUST reject signatures",
+          "quote_tail": "validity time window",
+          "quote_source": "entry-anchor"
+        }
+      ],
+      "base_ref": "P-01",
+      "paired_request_ref": null,
+      "materials_ref": [
+        "WIT-A",
+        "key:svcA",
+        "key:issuer",
+        "config:default"
+      ],
+      "mutation": {
+        "op": "set-verify-time"
+      },
+      "signature_source": "literal",
+      "message": {
+        "role": "request",
+        "raw": "GET /gimme-ice-cream?flavor=vanilla HTTP/1.1\r\nHost: svcb.example.com\r\nWorkload-Identity-Token: eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWEta2V5Iiwia3R5IjoiT0tQIiwieCI6Ik8zT2ZWbVBKM3BlWWhkRHJNd2VOSWlCT1FVNkpaQ05jWU1LMmtqVjBpM1kifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1hLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0EifQ.JCh9sN__1Al9xVB-K7CFafw1tDV8PCeZvyKdFyMmb9vvN4mK2ZGNbC6VLFpNzpVsgGBV0FwmzerDAFuikSJBCw\r\nSignature-Input: sig1=(\"@method\" \"@path\" \"@query\" \"workload-identity-token\");created=1795000000;expires=1795000300;nonce=\"7f3a9c1e5b284d06a1f4e8c2b6d50937\";tag=\"wimse-workload-to-workload\";wimse-aud=\"https://svcb.example.com/gimme-ice-cream\";wimse-sign-response\r\nSignature: sig1=:qrIGE6wS80/UvhJx96iDiz90OIYmUX8CFO4vOeK/40D7pnukeikqvsYGDs6aqXx099ILxgZliEepCw1P5M7YDg==:\r\n\r\n",
+        "body": null
+      },
+      "signatures": [
+        {
+          "label": "sig1",
+          "value": "qrIGE6wS80/UvhJx96iDiz90OIYmUX8CFO4vOeK/40D7pnukeikqvsYGDs6aqXx099ILxgZliEepCw1P5M7YDg=="
+        }
+      ],
+      "signature_base_provided": {
+        "sig1": "\"@method\": GET\n\"@path\": /gimme-ice-cream\n\"@query\": ?flavor=vanilla\n\"workload-identity-token\": eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWEta2V5Iiwia3R5IjoiT0tQIiwieCI6Ik8zT2ZWbVBKM3BlWWhkRHJNd2VOSWlCT1FVNkpaQ05jWU1LMmtqVjBpM1kifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1hLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0EifQ.JCh9sN__1Al9xVB-K7CFafw1tDV8PCeZvyKdFyMmb9vvN4mK2ZGNbC6VLFpNzpVsgGBV0FwmzerDAFuikSJBCw\n\"@signature-params\": (\"@method\" \"@path\" \"@query\" \"workload-identity-token\");created=1795000000;expires=1795000300;nonce=\"7f3a9c1e5b284d06a1f4e8c2b6d50937\";tag=\"wimse-workload-to-workload\";wimse-aud=\"https://svcb.example.com/gimme-ice-cream\";wimse-sign-response"
+      },
+      "evaluations": [
+        {
+          "verify_time": 1795000300,
+          "expect": {
+            "outcome": "ACCEPT"
+          }
+        },
+        {
+          "verify_time": 1795000301,
+          "expect": {
+            "outcome": "REJECT",
+            "http_status": 400,
+            "problem_type": "wimse-signature-invalid",
+            "failing_stage": "WINDOW",
+            "failing_code": "E_WINDOW_OUTSIDE",
+            "cascades": []
+          }
+        }
+      ],
+      "contrast": {
+        "time_invariant_stages": [
+          "WIT",
+          "SELECT",
+          "PARAMS",
+          "COVERAGE",
+          "BASE",
+          "DIGEST",
+          "CRYPTO",
+          "AUD"
+        ]
+      }
+    },
+    {
+      "id": "N-10",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "4",
+        "entry": "N-10",
+        "lines": [
+          286,
+          287
+        ],
+        "anchor_line": 287
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3.2",
+          "quote_head": "The recipient MUST verify",
+          "quote_tail": "of RFC 3986 §6.2.1",
+          "quote_source": "entry-anchor"
+        }
+      ],
+      "base_ref": "P-01",
+      "paired_request_ref": null,
+      "materials_ref": [
+        "WIT-A",
+        "key:svcA",
+        "key:issuer",
+        "config:default"
+      ],
+      "mutation": {
+        "op": "set-param",
+        "param": "wimse-aud=\"https://svcb.example.com/gimme-ice-cream/\""
+      },
+      "signature_source": "regen",
+      "message": null,
+      "signatures": [],
+      "signature_base_provided": null,
+      "evaluations": [
+        {
+          "verify_time": 1795000060,
+          "expect": {
+            "outcome": "REJECT",
+            "http_status": 400,
+            "problem_type": "wimse-signature-invalid",
+            "failing_stage": "AUD",
+            "failing_code": "E_AUD_MISMATCH",
+            "cascades": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "N-11",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "4",
+        "entry": "N-11",
+        "lines": [
+          288,
+          289
+        ],
+        "anchor_line": 289
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "For requests only, the",
+          "quote_tail": "be included: wimse-aud",
+          "quote_source": "entry-anchor"
+        }
+      ],
+      "base_ref": "P-01",
+      "paired_request_ref": null,
+      "materials_ref": [
+        "WIT-A",
+        "key:svcA",
+        "key:issuer",
+        "config:default"
+      ],
+      "mutation": {
+        "op": "remove-param",
+        "param": "wimse-aud"
+      },
+      "signature_source": "regen",
+      "message": null,
+      "signatures": [],
+      "signature_base_provided": null,
+      "evaluations": [
+        {
+          "verify_time": 1795000060,
+          "expect": {
+            "outcome": "REJECT",
+            "http_status": 400,
+            "problem_type": "wimse-signature-invalid",
+            "failing_stage": "PARAMS",
+            "failing_code": "E_PARAM_MISSING",
+            "cascades": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "N-12",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "4",
+        "entry": "N-12",
+        "lines": [
+          290,
+          291
+        ],
+        "anchor_line": 291
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3.4",
+          "quote_head": "Every signed response MUST",
+          "quote_tail": "MUST include wimse-req-nonce",
+          "quote_source": "entry-anchor"
+        }
+      ],
+      "base_ref": "P-02",
+      "paired_request_ref": "P-01",
+      "materials_ref": [
+        "WIT-B",
+        "key:svcB",
+        "key:issuer",
+        "config:default"
+      ],
+      "mutation": {
+        "op": "remove-param",
+        "param": "wimse-req-nonce"
+      },
+      "signature_source": "regen",
+      "message": null,
+      "signatures": [],
+      "signature_base_provided": null,
+      "evaluations": [
+        {
+          "verify_time": 1795000060,
+          "expect": {
+            "outcome": "CLIENT_REJECT",
+            "failing_stage": "PARAMS",
+            "failing_code": "E_REQNONCE_MISSING",
+            "cascades": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "N-13",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "4",
+        "entry": "N-13",
+        "lines": [
+          292,
+          293
+        ],
+        "anchor_line": 293
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3.5",
+          "quote_head": "the client MUST verify",
+          "quote_tail": "the corresponding request",
+          "quote_source": "entry-anchor"
+        }
+      ],
+      "base_ref": "P-02",
+      "paired_request_ref": "P-01",
+      "materials_ref": [
+        "WIT-B",
+        "key:svcB",
+        "key:issuer",
+        "config:default"
+      ],
+      "mutation": {
+        "op": "set-param",
+        "param": "wimse-req-nonce=\"00000000000000000000000000000000\""
+      },
+      "signature_source": "regen",
+      "message": null,
+      "signatures": [],
+      "signature_base_provided": null,
+      "evaluations": [
+        {
+          "verify_time": 1795000060,
+          "expect": {
+            "outcome": "CLIENT_REJECT",
+            "failing_stage": "BINDING",
+            "failing_code": "E_REQNONCE_MISMATCH",
+            "cascades": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "N-14",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "4",
+        "entry": "N-14",
+        "lines": [
+          294,
+          295
+        ],
+        "anchor_line": 295
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3.5",
+          "quote_head": "The client MUST reject",
+          "quote_tail": "Boolean value true",
+          "quote_source": "entry-anchor"
+        }
+      ],
+      "base_ref": "P-01+P-02",
+      "paired_request_ref": "P-01",
+      "materials_ref": [
+        "WIT-A",
+        "key:svcA",
+        "key:issuer",
+        "config:default",
+        "WIT-B",
+        "key:svcB"
+      ],
+      "mutation": {
+        "op": "custom-construct",
+        "note": "response with P-02 status line and body; all Signature / Signature-Input headers removed"
+      },
+      "signature_source": "none",
+      "message": null,
+      "signatures": [],
+      "signature_base_provided": null,
+      "evaluations": [
+        {
+          "verify_time": 1795000060,
+          "expect": {
+            "outcome": "CLIENT_REJECT",
+            "failing_stage": "BINDING",
+            "failing_code": "E_RESPONSE_UNSIGNED",
+            "cascades": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "N-15",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "4",
+        "entry": "N-15",
+        "lines": [
+          296,
+          303
+        ],
+        "anchor_line": 297
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3.1",
+          "quote_head": "Recipients MUST verify the",
+          "quote_tail": "is not acceptable",
+          "quote_source": "entry-anchor"
+        }
+      ],
+      "base_ref": "P-01",
+      "paired_request_ref": null,
+      "materials_ref": [
+        "WIT-A",
+        "key:svcA",
+        "key:svcC",
+        "key:issuer",
+        "config:default"
+      ],
+      "mutation": {
+        "op": "custom-construct",
+        "note": "literal ES256 signature by svcC over a P-01-shaped signature base; WIT-A cnf binds Ed25519/vec-a-key"
+      },
+      "signature_source": "literal",
+      "message": {
+        "role": "request",
+        "raw": "GET /gimme-ice-cream?flavor=vanilla HTTP/1.1\r\nHost: svcb.example.com\r\nWorkload-Identity-Token: eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWEta2V5Iiwia3R5IjoiT0tQIiwieCI6Ik8zT2ZWbVBKM3BlWWhkRHJNd2VOSWlCT1FVNkpaQ05jWU1LMmtqVjBpM1kifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1hLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0EifQ.JCh9sN__1Al9xVB-K7CFafw1tDV8PCeZvyKdFyMmb9vvN4mK2ZGNbC6VLFpNzpVsgGBV0FwmzerDAFuikSJBCw\r\nSignature-Input: sig1=(\"@method\" \"@path\" \"@query\" \"workload-identity-token\");created=1795000000;expires=1795000300;nonce=\"abcdef0123456789abcdef0123456789\";tag=\"wimse-workload-to-workload\";wimse-aud=\"https://svcb.example.com/gimme-ice-cream\"\r\nSignature: sig1=:28GmtKZAQJ1w6QtPGGrrrXMhdSgWXCmMbTVIuFNUh+PvOWS1oySwSUAPGhhvoad18zrTZXYh/Dh0ixcHcfB77g==:\r\n\r\n",
+        "body": null
+      },
+      "signatures": [
+        {
+          "label": "sig1",
+          "value": "28GmtKZAQJ1w6QtPGGrrrXMhdSgWXCmMbTVIuFNUh+PvOWS1oySwSUAPGhhvoad18zrTZXYh/Dh0ixcHcfB77g=="
+        }
+      ],
+      "signature_base_provided": {
+        "sig1": "\"@method\": GET\n\"@path\": /gimme-ice-cream\n\"@query\": ?flavor=vanilla\n\"workload-identity-token\": eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWEta2V5Iiwia3R5IjoiT0tQIiwieCI6Ik8zT2ZWbVBKM3BlWWhkRHJNd2VOSWlCT1FVNkpaQ05jWU1LMmtqVjBpM1kifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1hLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0EifQ.JCh9sN__1Al9xVB-K7CFafw1tDV8PCeZvyKdFyMmb9vvN4mK2ZGNbC6VLFpNzpVsgGBV0FwmzerDAFuikSJBCw\n\"@signature-params\": (\"@method\" \"@path\" \"@query\" \"workload-identity-token\");created=1795000000;expires=1795000300;nonce=\"abcdef0123456789abcdef0123456789\";tag=\"wimse-workload-to-workload\";wimse-aud=\"https://svcb.example.com/gimme-ice-cream\""
+      },
+      "evaluations": [
+        {
+          "verify_time": 1795000060,
+          "expect": {
+            "outcome": "REJECT",
+            "http_status": 400,
+            "problem_type": "wimse-signature-invalid",
+            "failing_stage": "CRYPTO",
+            "failing_code": "E_ALG_BINDING",
+            "cascades": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "N-16",
+      "kind": "negative-behavior",
+      "mode": "probe",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "4",
+        "entry": "N-16",
+        "lines": [
+          304,
+          305
+        ],
+        "anchor_line": 305
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "the nonce MUST contain",
+          "quote_tail": "64 bits of entropy",
+          "quote_source": "entry-anchor"
+        }
+      ],
+      "base_ref": null,
+      "paired_request_ref": null,
+      "materials_ref": [],
+      "message": null,
+      "signatures": [],
+      "signature_base_provided": null,
+      "mutation": null,
+      "signature_source": "probe",
+      "evaluations": [],
+      "probe": {
+        "subject": "sender",
+        "procedure": "see source entry construction and decision rule (source_anchor.lines)",
+        "pass_condition": "同实现 N 条请求 nonce 的取值空间或生成分布不足 64 bit 熵 → NONCONFORMANT"
+      },
+      "expect": {
+        "outcome": "NONCONFORMANT",
+        "subject": "sender",
+        "failing_code": "E_ENTROPY"
+      }
+    },
+    {
+      "id": "N-17",
+      "kind": "negative-behavior",
+      "mode": "probe",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "4",
+        "entry": "N-17",
+        "lines": [
+          306,
+          307
+        ],
+        "anchor_line": 307
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3.6",
+          "quote_head": "The server MUST NOT",
+          "quote_tail": "which check failed",
+          "quote_source": "entry-anchor"
+        }
+      ],
+      "base_ref": null,
+      "paired_request_ref": null,
+      "materials_ref": [],
+      "message": null,
+      "signatures": [],
+      "signature_base_provided": null,
+      "mutation": null,
+      "signature_source": "probe",
+      "evaluations": [],
+      "probe": {
+        "subject": "server",
+        "procedure": "see source entry construction and decision rule (source_anchor.lines)",
+        "pass_condition": "两类失败（WIT 无效／签名无效）各发一遍，响应状态码与 problem type 须同为 400＋wimse-signature-invalid 且不可区分，返回 401 亦判负 → 否则 NONCONFORMANT"
+      },
+      "expect": {
+        "outcome": "NONCONFORMANT",
+        "subject": "server",
+        "failing_code": "E_ERROR_SURFACE"
+      }
+    },
+    {
+      "id": "N-18",
+      "kind": "negative-behavior",
+      "mode": "probe",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "4",
+        "entry": "N-18",
+        "lines": [
+          308,
+          309
+        ],
+        "anchor_line": 309
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3.5, 3.6",
+          "quote_head": "it MUST NOT return",
+          "quote_tail": "MUST return an error",
+          "quote_source": "entry-anchor"
+        }
+      ],
+      "base_ref": null,
+      "paired_request_ref": null,
+      "materials_ref": [],
+      "message": null,
+      "signatures": [],
+      "signature_base_provided": null,
+      "mutation": null,
+      "signature_source": "probe",
+      "evaluations": [],
+      "probe": {
+        "subject": "server",
+        "procedure": "see source entry construction and decision rule (source_anchor.lines)",
+        "pass_condition": "响应状态码 200 且无签名 → NONCONFORMANT（合规行为为 501 不支持／400 不可签，逐情形对位）"
+      },
+      "expect": {
+        "outcome": "NONCONFORMANT",
+        "subject": "server",
+        "failing_code": "E_UNSIGNED_SUCCESS"
+      }
+    },
+    {
+      "id": "N-19",
+      "kind": "negative-behavior",
+      "mode": "probe",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "4",
+        "entry": "N-19",
+        "lines": [
+          310,
+          311
+        ],
+        "anchor_line": 311
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3.5",
+          "quote_head": "Accept-Signature MUST NOT be",
+          "quote_tail": "weaker than this profile",
+          "quote_source": "entry-anchor"
+        }
+      ],
+      "base_ref": null,
+      "paired_request_ref": null,
+      "materials_ref": [],
+      "message": null,
+      "signatures": [],
+      "signature_base_provided": null,
+      "mutation": null,
+      "signature_source": "probe",
+      "evaluations": [],
+      "probe": {
+        "subject": "sender",
+        "procedure": "see source entry construction and decision rule (source_anchor.lines)",
+        "pass_condition": "Accept-Signature 所列响应分量集 ⊉ §3 响应必签集，或服务端据此降低覆盖 → NONCONFORMANT"
+      },
+      "expect": {
+        "outcome": "NONCONFORMANT",
+        "subject": "sender",
+        "failing_code": "E_ACCEPT_SIG_WEAK"
+      }
+    },
+    {
+      "id": "N-20",
+      "kind": "negative-behavior",
+      "mode": "probe",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "4",
+        "entry": "N-20",
+        "lines": [
+          312,
+          313
+        ],
+        "anchor_line": 313
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "Recipients ... MUST validate",
+          "quote_tail": "been fully validated",
+          "quote_source": "entry-anchor"
+        }
+      ],
+      "base_ref": null,
+      "paired_request_ref": null,
+      "materials_ref": [],
+      "message": null,
+      "signatures": [],
+      "signature_base_provided": null,
+      "mutation": null,
+      "signature_source": "probe",
+      "evaluations": [],
+      "probe": {
+        "subject": "verifier",
+        "procedure": "see source entry construction and decision rule (source_anchor.lines)",
+        "pass_condition": "以 WIT 已过期而消息签名成立的消息探测，处理面出现业务副作用 → NONCONFORMANT；顺序面以实现审查/插桩证据判定"
+      },
+      "expect": {
+        "outcome": "NONCONFORMANT",
+        "subject": "verifier",
+        "failing_code": "E_PROCESS_ORDER"
+      }
+    },
+    {
+      "id": "N-21",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "4",
+        "entry": "N-21",
+        "lines": [
+          314,
+          315
+        ],
+        "anchor_line": 315
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "When the signed response",
+          "quote_tail": "cover @path;req or @query;req",
+          "quote_source": "entry-anchor"
+        }
+      ],
+      "base_ref": "P-02",
+      "paired_request_ref": null,
+      "materials_ref": [
+        "WIT-B",
+        "key:svcB",
+        "key:issuer",
+        "config:default"
+      ],
+      "mutation": {
+        "op": "add-component",
+        "component": "\"@path\";req",
+        "note": "P-02 shape migrated to a CONNECT exchange (A-04 regeneration)"
+      },
+      "signature_source": "regen",
+      "message": null,
+      "signatures": [],
+      "signature_base_provided": null,
+      "evaluations": [
+        {
+          "verify_time": 1795000060,
+          "expect": {
+            "outcome": "CLIENT_REJECT",
+            "failing_stage": "COVERAGE",
+            "failing_code": "E_COVERAGE_FORBIDDEN",
+            "cascades": []
+          }
+        }
+      ],
+      "notes": "CONNECT-migration construction (paired CONNECT request, ;req component values) is not specified in the source; construction rule to be fixed with the runner (design A-03)."
+    },
+    {
+      "id": "N-22",
+      "kind": "negative-behavior",
+      "mode": "probe",
+      "set_version": "v4",
+      "draft_version": "-08",
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "4",
+        "entry": "N-22",
+        "lines": [
+          316,
+          318
+        ],
+        "anchor_line": 317
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "recipients MUST use that",
+          "quote_tail": "NOT choose by label",
+          "quote_source": "entry-anchor"
+        }
+      ],
+      "base_ref": "P-06",
+      "paired_request_ref": null,
+      "materials_ref": [],
+      "message": null,
+      "signatures": [],
+      "signature_base_provided": null,
+      "mutation": null,
+      "signature_source": "probe",
+      "evaluations": [],
+      "probe": {
+        "subject": "verifier",
+        "procedure": "see source entry construction and decision rule (source_anchor.lines)",
+        "pass_condition": "P-06 场景下未选中 tag 命中者（sig2），即按 label 选签名 → NONCONFORMANT"
+      },
+      "expect": {
+        "outcome": "NONCONFORMANT",
+        "subject": "verifier",
+        "failing_code": "E_SELECTION_BY_LABEL"
+      }
+    }
+  ],
+  "observations": [
+    {
+      "id": "O-1",
+      "kind": "observation",
+      "judged": false,
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "5",
+        "entry": "O-1",
+        "lines": [
+          325,
+          326
+        ],
+        "anchor_line": 326
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "Recipients MAY maintain a",
+          "quote_tail": "they have already seen",
+          "quote_source": "entry-anchor"
+        }
+      ]
+    },
+    {
+      "id": "O-2",
+      "kind": "observation",
+      "judged": false,
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "5",
+        "entry": "O-2",
+        "lines": [
+          327,
+          328
+        ],
+        "anchor_line": 328
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "MUST contain at least",
+          "quote_tail": "64 bits of entropy",
+          "quote_source": "entry-anchor"
+        }
+      ]
+    },
+    {
+      "id": "O-3",
+      "kind": "observation",
+      "judged": false,
+      "source_anchor": {
+        "md5": "5df4f19a8a4a7f0ddd0ff792d0f09bc4",
+        "section": "5",
+        "entry": "O-3",
+        "lines": [
+          329,
+          330
+        ],
+        "anchor_line": 330
+      },
+      "anchor_clauses": [
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "The @authority derived component",
+          "quote_tail": "signature parameter (Section 3.2)",
+          "quote_source": "a11-supplement"
+        },
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "3",
+          "quote_head": "For a CONNECT request",
+          "quote_tail": "cover @path or @query",
+          "quote_source": "a11-supplement"
+        },
+        {
+          "doc": "draft-ietf-wimse-http-signature-08",
+          "section": "5.1",
+          "quote_head": "The audience is a signed",
+          "quote_tail": "for that reason (Section 3)",
+          "quote_source": "a11-supplement"
+        }
+      ]
+    }
+  ]
+}
