@@ -100,7 +100,7 @@ Cite the archived vector set: Miao, Jiahui. *Test Vectors for the WIMSE S2S Prot
 HTTP Signature Scheme — v4*. Zenodo, 2026. DOI 10.5281/zenodo.24203971.
 Machine-readable metadata is in [`CITATION.cff`](CITATION.cff).
 
-The vector data is licensed CC-BY-4.0, the same as the archived set.
+The vector data is licensed CC-BY-4.0, the same as the archived set. The code in this repository (tools/) is licensed under the MIT License - see [`LICENSE`](LICENSE).
 
 ## Versioning and maintenance
 
