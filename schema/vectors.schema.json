@@ -1,0 +1,218 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/HUIIIM/wimse-http-signature-test-vectors/schema/vectors.schema.json",
+  "title": "WIMSE HTTP signature test vector set",
+  "type": "object",
+  "required": ["suite", "set_version", "draft_version", "source", "counts", "stage_codes", "materials", "vectors", "observations"],
+  "additionalProperties": false,
+  "properties": {
+    "suite": {"const": "wimse-http-signature-test-vectors"},
+    "set_version": {"type": "string", "pattern": "^v[0-9]+$"},
+    "draft_version": {"type": "string", "pattern": "^draft-ietf-wimse-http-signature-[0-9]{2}$"},
+    "source": {
+      "type": "object",
+      "required": ["file", "md5", "archive_doi", "license"],
+      "additionalProperties": false,
+      "properties": {
+        "file": {"type": "string"},
+        "md5": {"$ref": "#/$defs/md5"},
+        "archive_doi": {"type": "string", "pattern": "^10\\.[0-9]+/"},
+        "previous_version_doi": {"type": "string", "pattern": "^10\\.[0-9]+/"},
+        "license": {"type": "string"}
+      }
+    },
+    "counts": {
+      "type": "object",
+      "required": ["positive", "negative", "negative_message", "negative_behavior", "observation", "judged_total"],
+      "additionalProperties": false,
+      "properties": {
+        "positive": {"type": "integer", "minimum": 0},
+        "negative": {"type": "integer", "minimum": 0},
+        "negative_message": {"type": "integer", "minimum": 0},
+        "negative_behavior": {"type": "integer", "minimum": 0},
+        "observation": {"type": "integer", "minimum": 0},
+        "judged_total": {"type": "integer", "minimum": 0}
+      }
+    },
+    "stage_codes": {"type": "array", "items": {"$ref": "#/$defs/stage"}, "minItems": 12},
+    "materials": {
+      "type": "object",
+      "required": ["keys", "wits", "trusted_config", "key_derivation", "clock", "conventions"],
+      "additionalProperties": false,
+      "properties": {
+        "keys": {"type": "array", "minItems": 1, "items": {
+          "type": "object",
+          "required": ["name", "alg", "kid", "sub", "public_jwk", "private_d", "derivation"],
+          "additionalProperties": false,
+          "properties": {
+            "name": {"type": "string"},
+            "alg": {"enum": ["Ed25519", "ES256"]},
+            "kid": {"type": "string"},
+            "sub": {"type": ["string", "null"]},
+            "public_jwk": {"type": "object", "required": ["alg", "kid", "kty", "crv", "x"]},
+            "private_d": {"$ref": "#/$defs/b64url"},
+            "derivation": {"type": "string"}
+          }
+        }},
+        "wits": {"type": "object", "additionalProperties": {
+          "type": "object",
+          "required": ["jws", "protected_header", "claims"],
+          "additionalProperties": false,
+          "properties": {
+            "jws": {"type": "string", "pattern": "^[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+$"},
+            "protected_header": {"type": "object"},
+            "claims": {"type": "object", "required": ["cnf", "exp", "iat", "iss", "jti", "sub"]}
+          }
+        }},
+        "trusted_config": {
+          "type": "object",
+          "required": ["wimse_aud_trusted", "issuer_anchor_jwk"],
+          "additionalProperties": false,
+          "properties": {
+            "wimse_aud_trusted": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+            "issuer_anchor_jwk": {"type": "object"}
+          }
+        },
+        "key_derivation": {"type": "object"},
+        "clock": {
+          "type": "object",
+          "required": ["t0", "default_verify_offset", "expires_offset"],
+          "additionalProperties": false,
+          "properties": {
+            "t0": {"type": "integer"},
+            "default_verify_offset": {"type": "integer"},
+            "expires_offset": {"type": "integer"}
+          }
+        },
+        "conventions": {"type": "object"}
+      }
+    },
+    "vectors": {"type": "array", "items": {"$ref": "#/$defs/vector"}},
+    "observations": {"type": "array", "items": {"$ref": "#/$defs/observation"}}
+  },
+  "$defs": {
+    "md5": {"type": "string", "pattern": "^[0-9a-f]{32}$"},
+    "b64url": {"type": "string", "pattern": "^[A-Za-z0-9_-]+$"},
+    "stage": {"enum": ["CONTEXT", "PARSE", "WIT", "SELECT", "PARAMS", "COVERAGE", "BASE", "DIGEST", "CRYPTO", "AUD", "BINDING", "WINDOW"]},
+    "vector_id": {"type": "string", "pattern": "^[PN]-[0-9]{2}b?$"},
+    "source_anchor": {
+      "type": "object",
+      "required": ["md5", "section", "entry", "lines", "anchor_line"],
+      "additionalProperties": false,
+      "properties": {
+        "md5": {"$ref": "#/$defs/md5"},
+        "section": {"type": "string"},
+        "entry": {"type": "string"},
+        "lines": {"type": "array", "items": {"type": "integer", "minimum": 1}, "minItems": 2, "maxItems": 2},
+        "anchor_line": {"type": "integer", "minimum": 1}
+      }
+    },
+    "clause": {
+      "type": "object",
+      "required": ["doc", "section", "quote_head", "quote_tail", "quote_source"],
+      "additionalProperties": false,
+      "properties": {
+        "doc": {"type": "string"},
+        "section": {"type": "string"},
+        "quote_head": {"type": ["string", "null"]},
+        "quote_tail": {"type": ["string", "null"]},
+        "quote_source": {"enum": ["entry-anchor", "a11-supplement", "none-in-entry"]},
+        "quote_loc": {"type": "string"}
+      }
+    },
+    "expect": {
+      "type": "object",
+      "required": ["outcome"],
+      "additionalProperties": false,
+      "properties": {
+        "outcome": {"enum": ["ACCEPT", "REJECT", "CLIENT_REJECT", "NONCONFORMANT"]},
+        "http_status": {"type": "integer"},
+        "problem_type": {"type": "string"},
+        "failing_stage": {"$ref": "#/$defs/stage"},
+        "failing_code": {"type": "string", "pattern": "^E_[A-Z_]+$"},
+        "cascades": {"type": "array", "items": {"$ref": "#/$defs/stage"}},
+        "subject": {"enum": ["sender", "server", "verifier"]}
+      }
+    },
+    "evaluation": {
+      "type": "object",
+      "required": ["verify_time", "expect"],
+      "additionalProperties": false,
+      "properties": {
+        "verify_time": {"type": "integer"},
+        "expect": {"$ref": "#/$defs/expect"}
+      }
+    },
+    "vector": {
+      "type": "object",
+      "required": ["id", "kind", "mode", "set_version", "draft_version", "source_anchor", "anchor_clauses",
+                   "base_ref", "paired_request_ref", "materials_ref", "message", "signatures",
+                   "signature_base_provided", "mutation", "signature_source", "evaluations"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"$ref": "#/$defs/vector_id"},
+        "kind": {"enum": ["positive", "negative-message", "negative-behavior"]},
+        "mode": {"enum": ["oracle", "contrast", "probe"]},
+        "set_version": {"type": "string"},
+        "draft_version": {"type": "string"},
+        "source_anchor": {"$ref": "#/$defs/source_anchor"},
+        "anchor_clauses": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/clause"}},
+        "base_ref": {"type": ["string", "null"]},
+        "paired_request_ref": {"type": ["string", "null"]},
+        "materials_ref": {"type": "array", "items": {"type": "string"}},
+        "message": {
+          "type": ["object", "null"],
+          "required": ["role", "raw", "body"],
+          "additionalProperties": false,
+          "properties": {
+            "role": {"enum": ["request", "response"]},
+            "raw": {"type": "string"},
+            "body": {"type": ["string", "null"]}
+          }
+        },
+        "signatures": {"type": "array", "items": {
+          "type": "object", "required": ["label", "value"], "additionalProperties": false,
+          "properties": {"label": {"type": "string"}, "value": {"type": "string", "pattern": "^[A-Za-z0-9+/]+=*$"}}
+        }},
+        "signature_base_provided": {"type": ["object", "null"], "additionalProperties": {"type": "string"}},
+        "mutation": {
+          "type": ["object", "null"],
+          "required": ["op"],
+          "properties": {
+            "op": {"enum": ["remove-param", "add-param", "set-param", "remove-component", "add-component",
+                            "set-body", "set-verify-time", "custom-construct"]}
+          }
+        },
+        "signature_source": {"enum": ["literal", "regen", "none", "probe"]},
+        "evaluations": {"type": "array", "items": {"$ref": "#/$defs/evaluation"}},
+        "expect_stages": {"const": "all-pass"},
+        "contrast": {
+          "type": "object", "required": ["time_invariant_stages"], "additionalProperties": false,
+          "properties": {"time_invariant_stages": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/stage"}}}
+        },
+        "probe": {
+          "type": "object", "required": ["subject", "procedure", "pass_condition"], "additionalProperties": false,
+          "properties": {
+            "subject": {"enum": ["sender", "server", "verifier"]},
+            "procedure": {"type": "string"},
+            "pass_condition": {"type": "string"}
+          }
+        },
+        "expect": {"$ref": "#/$defs/expect"},
+        "notes": {"type": "string"}
+      }
+    },
+    "observation": {
+      "type": "object",
+      "required": ["id", "kind", "judged", "source_anchor", "anchor_clauses"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string", "pattern": "^O-[0-9]+$"},
+        "kind": {"const": "observation"},
+        "judged": {"const": false},
+        "source_anchor": {"$ref": "#/$defs/source_anchor"},
+        "anchor_clauses": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/clause"}}
+      }
+    }
+  }
+}
