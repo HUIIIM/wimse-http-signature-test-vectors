@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+message: "If you use these test vectors, please cite the archived vector set using the metadata below."
+title: "wimse-http-signature-test-vectors"
+abstract: >-
+  Machine-readable test vectors (6 positive, 23 negative) for the WIMSE
+  workload-to-workload HTTP Message Signature profile
+  (draft-ietf-wimse-http-signature-08, RFC 9421), with extraction log and
+  schema validator.
+type: dataset
+authors:
+  - family-names: Miao
+    given-names: Jiahui
+version: "v4"
+date-released: "2026-11-13"
+license: CC-BY-4.0
+repository-code: "https://github.com/HUIIIM/wimse-http-signature-test-vectors"
+doi: 10.5281/zenodo.24203971
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.24203971
+    description: "Archival copy of vector set v4 (Zenodo)"
+keywords:
+  - WIMSE
+  - HTTP Message Signatures
+  - RFC 9421
+  - test vectors
+preferred-citation:
+  type: dataset
+  title: "Test Vectors for the WIMSE S2S Protocol HTTP Signature Scheme — v4"
+  authors:
+    - family-names: Miao
+      given-names: Jiahui
+  version: "v4"
+  date-released: "2026-11-13"
+  doi: 10.5281/zenodo.24203971
+  publisher:
+    name: Zenodo
+  license: CC-BY-4.0
