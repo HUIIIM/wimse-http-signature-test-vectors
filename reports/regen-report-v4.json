@@ -1,0 +1,193 @@
+{
+  "report": "regen",
+  "set_version": "v4",
+  "draft_version": "draft-ietf-wimse-http-signature-08",
+  "scope": "Batch W2b scope: key re-derivation, literal-base re-signing, old-base anti-mixing evidence, firmware data preparation, merged report. NOT in this batch: any verdict that requires reconstructing a signature base through the BASE stage (the corrected-base side of the anti-mixing firmware); that chain is gated on open item U4 (RFC 9421 section 2.5 @signature-params normalisation) and its verdict fields are explicitly null in the firmware data.",
+  "fingerprints": {
+    "vectors_file": "vectors.json",
+    "vectors_md5": "b08b4063023d6194d90d273ce343e1af",
+    "vectors_sha256": "b64b753dc89c93f0ae809ed9bd575d6718ac00e5169a07302dedf28407329b07"
+  },
+  "items": [
+    {
+      "item": "key-rederivation",
+      "description": "Re-derive every key from the set's seed rules; the public JWK coordinates and private d must match the published materials byte-for-byte.",
+      "verdict": "PASS",
+      "counts": {
+        "total": 5,
+        "pass": 5,
+        "fail": 0
+      },
+      "checks": [
+        {
+          "key": "issuer",
+          "alg": "Ed25519",
+          "public_jwk_match": true,
+          "private_d_match": true,
+          "verdict": "PASS"
+        },
+        {
+          "key": "svcA",
+          "alg": "Ed25519",
+          "public_jwk_match": true,
+          "private_d_match": true,
+          "verdict": "PASS"
+        },
+        {
+          "key": "svcB",
+          "alg": "Ed25519",
+          "public_jwk_match": true,
+          "private_d_match": true,
+          "verdict": "PASS"
+        },
+        {
+          "key": "svcC",
+          "alg": "ES256",
+          "public_jwk_match": true,
+          "private_d_match": true,
+          "verdict": "PASS"
+        },
+        {
+          "key": "other",
+          "alg": "Ed25519",
+          "public_jwk_match": true,
+          "private_d_match": true,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "item": "literal-base-resign",
+      "description": "Re-sign each literal signature base (positives and N-15) with the signer's re-derived key; Ed25519 directly, ES256 via RFC 6979; byte-for-byte match with the stored signature required.",
+      "verdict": "PASS",
+      "counts": {
+        "total": 8,
+        "pass": 8,
+        "fail": 0
+      },
+      "checks": [
+        {
+          "vector": "N-15",
+          "label": "sig1",
+          "signer": "svcC",
+          "alg": "ES256",
+          "byte_match": true,
+          "verdict": "PASS"
+        },
+        {
+          "vector": "P-01",
+          "label": "sig1",
+          "signer": "svcA",
+          "alg": "Ed25519",
+          "byte_match": true,
+          "verdict": "PASS"
+        },
+        {
+          "vector": "P-02",
+          "label": "sig1",
+          "signer": "svcB",
+          "alg": "Ed25519",
+          "byte_match": true,
+          "verdict": "PASS"
+        },
+        {
+          "vector": "P-03",
+          "label": "sig1",
+          "signer": "svcC",
+          "alg": "ES256",
+          "byte_match": true,
+          "verdict": "PASS"
+        },
+        {
+          "vector": "P-04",
+          "label": "sig1",
+          "signer": "svcA",
+          "alg": "Ed25519",
+          "byte_match": true,
+          "verdict": "PASS"
+        },
+        {
+          "vector": "P-05",
+          "label": "sig1",
+          "signer": "svcA",
+          "alg": "Ed25519",
+          "byte_match": true,
+          "verdict": "PASS"
+        },
+        {
+          "vector": "P-06",
+          "label": "sig1",
+          "signer": "other",
+          "alg": "Ed25519",
+          "byte_match": true,
+          "verdict": "PASS"
+        },
+        {
+          "vector": "P-06",
+          "label": "sig2",
+          "signer": "svcA",
+          "alg": "Ed25519",
+          "byte_match": true,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "item": "anti-mixing-old-base-evidence",
+      "description": "Each old (pre-correction) signature verifies on its old base: pipeline-equivalence evidence for the anti-mixing firmware.",
+      "verdict": "PASS",
+      "counts": {
+        "total": 4,
+        "pass": 4,
+        "fail": 0
+      },
+      "checks": [
+        {
+          "vector": "P-01",
+          "label": "sig1",
+          "signer": "svcA",
+          "alg": "Ed25519",
+          "verifies_on_old_base": true,
+          "verdict": "PASS"
+        },
+        {
+          "vector": "P-02",
+          "label": "sig1",
+          "signer": "svcB",
+          "alg": "Ed25519",
+          "verifies_on_old_base": true,
+          "verdict": "PASS"
+        },
+        {
+          "vector": "P-06",
+          "label": "sig2",
+          "signer": "svcA",
+          "alg": "Ed25519",
+          "verifies_on_old_base": true,
+          "verdict": "PASS"
+        },
+        {
+          "vector": "N-15",
+          "label": "sig1",
+          "signer": "svcC",
+          "alg": "ES256",
+          "verifies_on_old_base": true,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "item": "anti-mixing-firmware-data",
+      "description": "Firmware entries prepared as structured data for both sides; corrected-base verdict fields are null pending U4 (not judged in this batch).",
+      "verdict": "PREPARED",
+      "entries": 4,
+      "corrected_base_verdicts": "null (pending U4)"
+    }
+  ],
+  "summary": {
+    "judged_checks": 17,
+    "pass": 17,
+    "fail": 0,
+    "overall": "PASS"
+  }
+}
