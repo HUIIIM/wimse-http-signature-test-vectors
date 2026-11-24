@@ -1,0 +1,59 @@
+{
+  "firmware": "anti-mixing-old-base-signatures",
+  "set_version": "v4",
+  "note": "Old-base signatures for the anti-mixing self-check (design section 4.6). corrected_base_verdict is null pending U4; see the entry note.",
+  "entries": [
+    {
+      "vector": "P-01",
+      "label": "sig1",
+      "signer": "svcA",
+      "alg": "Ed25519",
+      "defect": "@query line value lacks the leading '?' (RFC 9421 section 2.2.7; source section 0, S1/T1)",
+      "corrected_base": "\"@method\": GET\n\"@path\": /gimme-ice-cream\n\"@query\": ?flavor=vanilla\n\"workload-identity-token\": eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWEta2V5Iiwia3R5IjoiT0tQIiwieCI6Ik8zT2ZWbVBKM3BlWWhkRHJNd2VOSWlCT1FVNkpaQ05jWU1LMmtqVjBpM1kifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1hLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0EifQ.JCh9sN__1Al9xVB-K7CFafw1tDV8PCeZvyKdFyMmb9vvN4mK2ZGNbC6VLFpNzpVsgGBV0FwmzerDAFuikSJBCw\n\"@signature-params\": (\"@method\" \"@path\" \"@query\" \"workload-identity-token\");created=1795000000;expires=1795000300;nonce=\"7f3a9c1e5b284d06a1f4e8c2b6d50937\";tag=\"wimse-workload-to-workload\";wimse-aud=\"https://svcb.example.com/gimme-ice-cream\";wimse-sign-response",
+      "old_base": "\"@method\": GET\n\"@path\": /gimme-ice-cream\n\"@query\": flavor=vanilla\n\"workload-identity-token\": eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWEta2V5Iiwia3R5IjoiT0tQIiwieCI6Ik8zT2ZWbVBKM3BlWWhkRHJNd2VOSWlCT1FVNkpaQ05jWU1LMmtqVjBpM1kifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1hLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0EifQ.JCh9sN__1Al9xVB-K7CFafw1tDV8PCeZvyKdFyMmb9vvN4mK2ZGNbC6VLFpNzpVsgGBV0FwmzerDAFuikSJBCw\n\"@signature-params\": (\"@method\" \"@path\" \"@query\" \"workload-identity-token\");created=1795000000;expires=1795000300;nonce=\"7f3a9c1e5b284d06a1f4e8c2b6d50937\";tag=\"wimse-workload-to-workload\";wimse-aud=\"https://svcb.example.com/gimme-ice-cream\";wimse-sign-response",
+      "old_signature": "9NW0p6RymixUlZEKptq1OiX/XS0qNcaNNUUdDfD3APJ6t96WoVtI+cV/xN5kW6DOkSEIInP1MR+/RVYG9ZEsBA==",
+      "old_base_verdict": "PASS",
+      "corrected_base_verdict": null,
+      "corrected_base_note": "PENDING U4: not judged in batch W2b. The verdict (old signature must fail on the corrected base) is rendered only after the BASE-stage reconstruction chain is settled (open item U4, RFC 9421 section 2.5 @signature-params normalisation)."
+    },
+    {
+      "vector": "P-02",
+      "label": "sig1",
+      "signer": "svcB",
+      "alg": "Ed25519",
+      "defect": "@query line value lacks the leading '?' (RFC 9421 section 2.2.7; source section 0, S1/T1)",
+      "corrected_base": "\"@status\": 404\n\"workload-identity-token\": eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWIta2V5Iiwia3R5IjoiT0tQIiwieCI6IjRqVkF6Z0VQTzVuLTZqdWpTaXlRTUU1dC10SXpaQXBiaFI1Y1RQb2VkSUkifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1iLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0IifQ.iBAAT-2xF6Polfa49cDu4THgh3zhCdbAitBM5JIgxuuCEdbjMKglKVskt7E78jdE42i3FMMP9-Lw0PLRXwXaBQ\n\"content-type\": text/plain\n\"content-digest\": sha-256=:uJC3qmCc7n6/6w4N2I0vAfj1cd/hTOAhxLEYXmPbNno=:\n\"@method\";req: GET\n\"@path\";req: /gimme-ice-cream\n\"@query\";req: ?flavor=vanilla\n\"@signature-params\": (\"@status\" \"workload-identity-token\" \"content-type\" \"content-digest\" \"@method\";req \"@path\";req \"@query\";req);created=1795000002;expires=1795000302;nonce=\"2b8e4f0a9d1c3756e0a2b4c6d8f0a1b3\";tag=\"wimse-workload-to-workload\";wimse-req-nonce=\"7f3a9c1e5b284d06a1f4e8c2b6d50937\"",
+      "old_base": "\"@status\": 404\n\"workload-identity-token\": eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWIta2V5Iiwia3R5IjoiT0tQIiwieCI6IjRqVkF6Z0VQTzVuLTZqdWpTaXlRTUU1dC10SXpaQXBiaFI1Y1RQb2VkSUkifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1iLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0IifQ.iBAAT-2xF6Polfa49cDu4THgh3zhCdbAitBM5JIgxuuCEdbjMKglKVskt7E78jdE42i3FMMP9-Lw0PLRXwXaBQ\n\"content-type\": text/plain\n\"content-digest\": sha-256=:uJC3qmCc7n6/6w4N2I0vAfj1cd/hTOAhxLEYXmPbNno=:\n\"@method\";req: GET\n\"@path\";req: /gimme-ice-cream\n\"@query\";req: flavor=vanilla\n\"@signature-params\": (\"@status\" \"workload-identity-token\" \"content-type\" \"content-digest\" \"@method\";req \"@path\";req \"@query\";req);created=1795000002;expires=1795000302;nonce=\"2b8e4f0a9d1c3756e0a2b4c6d8f0a1b3\";tag=\"wimse-workload-to-workload\";wimse-req-nonce=\"7f3a9c1e5b284d06a1f4e8c2b6d50937\"",
+      "old_signature": "OjMFe4m65+aMby0HKr9d3oYPRKKqHMV8rS7bnfy609XAUJhGIUlyUl1eNRvkIFNHaakxPlSnf1oj2u8NISA6BQ==",
+      "old_base_verdict": "PASS",
+      "corrected_base_verdict": null,
+      "corrected_base_note": "PENDING U4: not judged in batch W2b. The verdict (old signature must fail on the corrected base) is rendered only after the BASE-stage reconstruction chain is settled (open item U4, RFC 9421 section 2.5 @signature-params normalisation)."
+    },
+    {
+      "vector": "P-06",
+      "label": "sig2",
+      "signer": "svcA",
+      "alg": "Ed25519",
+      "defect": "@query line value lacks the leading '?' (RFC 9421 section 2.2.7; source section 0, S1/T1)",
+      "corrected_base": "\"@method\": GET\n\"@path\": /gimme-ice-cream\n\"@query\": ?flavor=vanilla\n\"workload-identity-token\": eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWEta2V5Iiwia3R5IjoiT0tQIiwieCI6Ik8zT2ZWbVBKM3BlWWhkRHJNd2VOSWlCT1FVNkpaQ05jWU1LMmtqVjBpM1kifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1hLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0EifQ.JCh9sN__1Al9xVB-K7CFafw1tDV8PCeZvyKdFyMmb9vvN4mK2ZGNbC6VLFpNzpVsgGBV0FwmzerDAFuikSJBCw\n\"@signature-params\": (\"@method\" \"@path\" \"@query\" \"workload-identity-token\");created=1795000000;expires=1795000300;nonce=\"f0e1d2c3b4a5968778695a4b3c2d1e0f\";tag=\"wimse-workload-to-workload\";wimse-aud=\"https://svcb.example.com/gimme-ice-cream\"",
+      "old_base": "\"@method\": GET\n\"@path\": /gimme-ice-cream\n\"@query\": flavor=vanilla\n\"workload-identity-token\": eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWEta2V5Iiwia3R5IjoiT0tQIiwieCI6Ik8zT2ZWbVBKM3BlWWhkRHJNd2VOSWlCT1FVNkpaQ05jWU1LMmtqVjBpM1kifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1hLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0EifQ.JCh9sN__1Al9xVB-K7CFafw1tDV8PCeZvyKdFyMmb9vvN4mK2ZGNbC6VLFpNzpVsgGBV0FwmzerDAFuikSJBCw\n\"@signature-params\": (\"@method\" \"@path\" \"@query\" \"workload-identity-token\");created=1795000000;expires=1795000300;nonce=\"f0e1d2c3b4a5968778695a4b3c2d1e0f\";tag=\"wimse-workload-to-workload\";wimse-aud=\"https://svcb.example.com/gimme-ice-cream\"",
+      "old_signature": "WMzq6kTy1tgM9BlBBpIKXT5B3cVYWJbl2QK+27KfcBAqkN/5GuHIMt/NzjqOTnN8MVrrS/2SmirYhWdJmhP/Cg==",
+      "old_base_verdict": "PASS",
+      "corrected_base_verdict": null,
+      "corrected_base_note": "PENDING U4: not judged in batch W2b. The verdict (old signature must fail on the corrected base) is rendered only after the BASE-stage reconstruction chain is settled (open item U4, RFC 9421 section 2.5 @signature-params normalisation)."
+    },
+    {
+      "vector": "N-15",
+      "label": "sig1",
+      "signer": "svcC",
+      "alg": "ES256",
+      "defect": "@query line value lacks the leading '?' (RFC 9421 section 2.2.7; source section 0, S1/T1)",
+      "corrected_base": "\"@method\": GET\n\"@path\": /gimme-ice-cream\n\"@query\": ?flavor=vanilla\n\"workload-identity-token\": eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWEta2V5Iiwia3R5IjoiT0tQIiwieCI6Ik8zT2ZWbVBKM3BlWWhkRHJNd2VOSWlCT1FVNkpaQ05jWU1LMmtqVjBpM1kifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1hLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0EifQ.JCh9sN__1Al9xVB-K7CFafw1tDV8PCeZvyKdFyMmb9vvN4mK2ZGNbC6VLFpNzpVsgGBV0FwmzerDAFuikSJBCw\n\"@signature-params\": (\"@method\" \"@path\" \"@query\" \"workload-identity-token\");created=1795000000;expires=1795000300;nonce=\"abcdef0123456789abcdef0123456789\";tag=\"wimse-workload-to-workload\";wimse-aud=\"https://svcb.example.com/gimme-ice-cream\"",
+      "old_base": "\"@method\": GET\n\"@path\": /gimme-ice-cream\n\"@query\": flavor=vanilla\n\"workload-identity-token\": eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWEta2V5Iiwia3R5IjoiT0tQIiwieCI6Ik8zT2ZWbVBKM3BlWWhkRHJNd2VOSWlCT1FVNkpaQ05jWU1LMmtqVjBpM1kifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1hLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0EifQ.JCh9sN__1Al9xVB-K7CFafw1tDV8PCeZvyKdFyMmb9vvN4mK2ZGNbC6VLFpNzpVsgGBV0FwmzerDAFuikSJBCw\n\"@signature-params\": (\"@method\" \"@path\" \"@query\" \"workload-identity-token\");created=1795000000;expires=1795000300;nonce=\"abcdef0123456789abcdef0123456789\";tag=\"wimse-workload-to-workload\";wimse-aud=\"https://svcb.example.com/gimme-ice-cream\"",
+      "old_signature": "6M4HL8Uqn5vOPzPw0F/6lgMdqQXY/qk/HxbJLYxDK3ykuZboIL/OeDbMZ81Pvc8k/O0iuhNAaoF8UWK+SDmySQ==",
+      "old_base_verdict": "PASS",
+      "corrected_base_verdict": null,
+      "corrected_base_note": "PENDING U4: not judged in batch W2b. The verdict (old signature must fail on the corrected base) is rendered only after the BASE-stage reconstruction chain is settled (open item U4, RFC 9421 section 2.5 @signature-params normalisation)."
+    }
+  ]
+}
