@@ -26,8 +26,10 @@ A conformance vector set for implementers of the WIMSE HTTP signature profile:
   window.
 
 The set was published for review on the WIMSE draft's GitHub issue #419 and the WIMSE
-mailing list. It was revised after review by a draft co-author. Two independent
-implementers reproduced earlier revisions of the set in full. v4 adds only the `N-09b`
+mailing list. It was revised after review by a draft co-author. An earlier revision was independently reproduced by one implementer, whose
+findings led to four corrections in the set; the corrected revision was then
+reproduced by a second independent implementer with complete agreement on all
+results. v4 adds only the `N-09b`
 boundary vector on top of v3. The revision history is in
 `vectors/v4/source.md` §0.
 
